@@ -1,0 +1,3 @@
+# mongodb role
+
+Implementation placeholder.

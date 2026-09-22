@@ -1,0 +1,4 @@
+---
+- name: PostgreSQL role placeholder
+  ansible.builtin.debug:
+    msg: "PostgreSQL and Keycloak database configuration will be implemented here."

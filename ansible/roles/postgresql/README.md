@@ -1,0 +1,3 @@
+# postgresql role
+
+Implementation placeholder.

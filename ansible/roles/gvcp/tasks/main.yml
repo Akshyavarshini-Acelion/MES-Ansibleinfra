@@ -1,0 +1,4 @@
+---
+- name: GVCP role placeholder
+  ansible.builtin.debug:
+    msg: "GVCP configuration will be implemented here."

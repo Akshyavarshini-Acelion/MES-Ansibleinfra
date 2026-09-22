@@ -1,0 +1,6 @@
+---
+- name: Configure telemetry servers
+  import_playbook: telemetry.yml
+
+- name: Configure database servers
+  import_playbook: database.yml

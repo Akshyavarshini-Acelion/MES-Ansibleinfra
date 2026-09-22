@@ -1,0 +1,4 @@
+---
+- name: MES backend role placeholder
+  ansible.builtin.debug:
+    msg: "MES backend deployment will be implemented here."

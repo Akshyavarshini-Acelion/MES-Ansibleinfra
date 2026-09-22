@@ -1,0 +1,3 @@
+# common role
+
+Implementation placeholder.

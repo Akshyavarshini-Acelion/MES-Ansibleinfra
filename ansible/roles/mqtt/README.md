@@ -1,0 +1,3 @@
+# mqtt role
+
+Implementation placeholder.

@@ -1,0 +1,13 @@
+---
+- name: Configure telemetry servers
+  hosts: telemetry
+  become: true
+
+  roles:
+    - common
+    # Enable these roles after connectivity/common configuration is verified.
+    # - mqtt
+    # - socket-tunnel
+    # - fins
+    # - gvcp
+    # - mes-backend

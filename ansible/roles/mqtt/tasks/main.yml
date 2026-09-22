@@ -1,0 +1,7 @@
+---
+# MQTT role placeholder.
+# Add broker-specific installation/configuration after the MQTT
+# broker and exact listener requirements are finalized.
+- name: MQTT role placeholder
+  ansible.builtin.debug:
+    msg: "MQTT configuration will be implemented here."

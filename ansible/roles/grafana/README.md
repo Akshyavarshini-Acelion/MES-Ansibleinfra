@@ -1,0 +1,3 @@
+# grafana role
+
+Implementation placeholder.

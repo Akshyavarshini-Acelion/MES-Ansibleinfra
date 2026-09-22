@@ -1,0 +1,13 @@
+---
+- name: Gather OS facts
+  ansible.builtin.setup:
+
+- name: Install common packages
+  ansible.builtin.package:
+    name:
+      - curl
+      - wget
+      - git
+      - ca-certificates
+      - unzip
+    state: present

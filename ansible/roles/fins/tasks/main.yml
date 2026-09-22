@@ -1,0 +1,4 @@
+---
+- name: FINS role placeholder
+  ansible.builtin.debug:
+    msg: "FINS configuration will be implemented here."

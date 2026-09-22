@@ -1,0 +1,11 @@
+---
+- name: Configure database servers
+  hosts: database
+  become: true
+
+  roles:
+    - common
+    # Enable these roles after connectivity/common configuration is verified.
+    # - mongodb
+    # - postgresql
+    # - grafana

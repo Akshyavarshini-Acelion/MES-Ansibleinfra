@@ -1,0 +1,4 @@
+---
+- name: MongoDB role placeholder
+  ansible.builtin.debug:
+    msg: "MongoDB configuration will be implemented here."

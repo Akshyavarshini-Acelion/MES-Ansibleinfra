@@ -1,0 +1,4 @@
+---
+- name: Socket tunnel role placeholder
+  ansible.builtin.debug:
+    msg: "Socket tunnel configuration will be implemented here."

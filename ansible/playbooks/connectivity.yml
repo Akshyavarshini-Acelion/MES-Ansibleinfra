@@ -1,0 +1,8 @@
+---
+- name: Test connectivity to all MES infrastructure servers
+  hosts: all
+  gather_facts: true
+
+  tasks:
+    - name: Verify Ansible can reach the host
+      ansible.builtin.ping:

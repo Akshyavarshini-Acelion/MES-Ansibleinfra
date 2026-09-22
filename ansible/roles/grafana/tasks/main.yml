@@ -1,0 +1,4 @@
+---
+- name: Grafana role placeholder
+  ansible.builtin.debug:
+    msg: "Grafana configuration will be implemented here."
