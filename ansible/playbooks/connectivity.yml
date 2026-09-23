@@ -1,8 +1,8 @@
 ---
-- name: Test connectivity to all MES infrastructure servers
-  hosts: all
-  gather_facts: true
+- name: Test DB Server Connectivity
+  hosts: database
+  gather_facts: false
 
   tasks:
-    - name: Verify Ansible can reach the host
+    - name: Test Ansible connection
       ansible.builtin.ping:
