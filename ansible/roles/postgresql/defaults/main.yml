@@ -1,0 +1,12 @@
+---
+postgresql_container_name: ensync-postgres
+postgresql_image: postgres:16
+
+postgresql_db: keycloak
+postgresql_user: keycloak
+postgresql_password: CHANGE_ME_LATER
+
+postgresql_port: 5432
+
+postgresql_volume: ensync_postgres_data
+postgresql_network: ensync_network

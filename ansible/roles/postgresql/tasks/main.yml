@@ -1,14 +1,53 @@
 ---
-- name: Install PostgreSQL
-  ansible.builtin.apt:
-    name:
-      - postgresql
-      - postgresql-contrib
-    state: present
-    update_cache: true
 
-- name: Ensure PostgreSQL is running
-  ansible.builtin.service:
-    name: postgresql
+- name: Create EnSync Docker network
+  become: true
+  community.docker.docker_network:
+    name: "{{ postgresql_network }}"
+    state: present
+
+- name: Create PostgreSQL volume
+  become: true
+  community.docker.docker_volume:
+    name: "{{ postgresql_volume }}"
+    state: present
+
+- name: Run PostgreSQL container
+  become: true
+  community.docker.docker_container:
+    name: "{{ postgresql_container_name }}"
+    image: "{{ postgresql_image }}"
     state: started
-    enabled: true
+    restart_policy: unless-stopped
+
+    env:
+      POSTGRES_DB: "{{ postgresql_db }}"
+      POSTGRES_USER: "{{ postgresql_user }}"
+      POSTGRES_PASSWORD: "{{ postgresql_password }}"
+
+    ports:
+      - "{{ postgresql_port }}:5432"
+
+    volumes:
+      - "{{ postgresql_volume }}:/var/lib/postgresql/data"
+
+    networks:
+      - name: "{{ postgresql_network }}"
+
+- name: Wait for PostgreSQL
+  become: true
+  ansible.builtin.wait_for:
+    host: 127.0.0.1
+    port: "{{ postgresql_port }}"
+    delay: 3
+    timeout: 60
+
+- name: Verify PostgreSQL container
+  become: true
+  community.docker.docker_container_info:
+    name: "{{ postgresql_container_name }}"
+  register: postgresql_container
+
+- name: Show PostgreSQL container status
+  ansible.builtin.debug:
+    msg: "PostgreSQL container is {{ postgresql_container.container.State.Status }}"
