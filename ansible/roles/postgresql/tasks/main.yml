@@ -1,4 +1,14 @@
 ---
-- name: PostgreSQL role placeholder
-  ansible.builtin.debug:
-    msg: "PostgreSQL and Keycloak database configuration will be implemented here."
+- name: Install PostgreSQL
+  ansible.builtin.apt:
+    name:
+      - postgresql
+      - postgresql-contrib
+    state: present
+    update_cache: true
+
+- name: Ensure PostgreSQL is running
+  ansible.builtin.service:
+    name: postgresql
+    state: started
+    enabled: true

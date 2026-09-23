@@ -1,11 +1,26 @@
 ---
-- name: Configure database servers
+- name: Configure DB Server
   hosts: database
   become: true
+  gather_facts: true
+
+  tasks:
+    - name: Update apt package cache
+      ansible.builtin.apt:
+        update_cache: true
+        cache_valid_time: 3600
+
+    - name: Install common packages
+      ansible.builtin.apt:
+        name:
+          - curl
+          - wget
+          - git
+          - vim
+          - unzip
+          - ca-certificates
+          - htop
+        state: present
 
   roles:
-    - common
-    # Enable these roles after connectivity/common configuration is verified.
-    # - mongodb
-    # - postgresql
-    # - grafana
+    - postgresql
