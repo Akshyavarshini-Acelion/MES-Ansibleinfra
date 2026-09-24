@@ -1,8 +1,0 @@
----
-mongodb_port: 7017
-postgresql_port: 5432
-grafana_port: 3000
-
-# IMPORTANT:
-# Standard MongoDB is commonly 27017. Keep 7017 only if
-# that is the intentional port for this deployment.

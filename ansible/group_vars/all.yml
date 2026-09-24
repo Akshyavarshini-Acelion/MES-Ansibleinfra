@@ -1,5 +1,0 @@
----
-# Global variables shared by all environments.
-# Do not store passwords or other secrets here.
-
-ansible_python_interpreter: auto_silent
