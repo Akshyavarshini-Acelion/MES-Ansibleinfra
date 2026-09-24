@@ -1,41 +1,43 @@
 ---
-
-- name: Install MongoDB dependencies
+- name: Pull MongoDB Docker image
   become: true
-  ansible.builtin.apt:
-    name:
-      - gnupg
-      - curl
-    state: present
+  community.docker.docker_image:
+    name: "{{ mongodb_image }}"
+    source: pull
 
-- name: Download MongoDB GPG key
+- name: Create MongoDB Docker volume
   become: true
-  ansible.builtin.get_url:
-    url: https://www.mongodb.org/static/pgp/server-8.0.asc
-    dest: /usr/share/keyrings/mongodb-server-8.0.asc
-    mode: '0644'
+  community.docker.docker_volume:
+    name: "{{ mongodb_volume_name }}"
 
-- name: Add MongoDB repository
+- name: Run MongoDB container
   become: true
-  ansible.builtin.apt_repository:
-    repo: "deb [ arch=amd64,arm64 signed-by=/usr/share/keyrings/mongodb-server-8.0.asc ] https://repo.mongodb.org/apt/ubuntu noble/mongodb-org/8.0 multiverse"
-    state: present
-    filename: mongodb-org-8.0
-
-- name: Update apt package cache
-  become: true
-  ansible.builtin.apt:
-    update_cache: true
-
-- name: Install MongoDB
-  become: true
-  ansible.builtin.apt:
-    name: mongodb-org
-    state: present
-
-- name: Enable and start MongoDB
-  become: true
-  ansible.builtin.systemd:
-    name: mongod
-    enabled: true
+  community.docker.docker_container:
+    name: "{{ mongodb_container_name }}"
+    image: "{{ mongodb_image }}"
     state: started
+    restart_policy: unless-stopped
+    ports:
+      - "{{ mongodb_port }}:27017"
+    volumes:
+      - "{{ mongodb_volume_name }}:/data/db"
+    env:
+      MONGO_INITDB_ROOT_USERNAME: "{{ mongodb_root_username }}"
+      MONGO_INITDB_ROOT_PASSWORD: "{{ mongodb_root_password }}"
+
+- name: Wait for MongoDB
+  become: true
+  ansible.builtin.wait_for:
+    host: 127.0.0.1
+    port: "{{ mongodb_port }}"
+    timeout: 60
+
+- name: Verify MongoDB container
+  become: true
+  community.docker.docker_container_info:
+    name: "{{ mongodb_container_name }}"
+  register: mongodb_container
+
+- name: Display MongoDB status
+  ansible.builtin.debug:
+    msg: "MongoDB container is {{ mongodb_container.container.State.Status }}"

@@ -1,0 +1,11 @@
+---
+mongodb_image: "mongo:8"
+mongodb_container_name: "ensync-mongodb"
+mongodb_port: 27017
+
+mongodb_root_username: "admin"
+mongodb_root_password: "root4500"
+
+mongodb_database: "inventory_db"
+
+mongodb_volume_name: "ensync_mongodb_data"
